@@ -1,0 +1,5 @@
+node_mnodules/
+.env
+
+/generated/prisma
+node_modules

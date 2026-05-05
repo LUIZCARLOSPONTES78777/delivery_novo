@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Cartao" ADD COLUMN     "cpfTitular" TEXT,
+ADD COLUMN     "salvoEm" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

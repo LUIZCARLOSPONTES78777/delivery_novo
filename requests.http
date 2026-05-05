@@ -1,0 +1,128 @@
+############################################
+# BASE
+############################################
+@baseUrl = http://localhost:3333
+Content-Type: application/json
+
+############################################
+# 🗂️ CATEGORIAS
+############################################
+
+### Criar categoria
+POST {{baseUrl}}/category
+Content-Type: application/json
+
+{
+  "nome": "porcoes",
+  "slug": "porcoes"
+}
+
+###
+
+### Listar categorias
+GET {{baseUrl}}/category/all
+Content-Type: application/json
+
+###
+
+############################################
+# 📦 PRODUTOS
+############################################
+
+### Criar produto
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "nome": "Brownie 500g",
+  "descricao": "Brownie artesanal de 300g, feito com chocolate intenso, textura macia por dentro e levemente crocante por fora, preparado com técnicas de culinária refinada para um sabor marcante e irresistível.",
+  "preco": 13.50,
+  "imageUrl": "https://img.freepik.com/fotos-gratis/porcao-de-brownie-de-chocolate-isolada-em-fundo-branco_123827-27904.jpg?semt=ais_hybrid&w=740&q=80",
+  "categoryId": "0632f8f1-2314-4918-8617-70890d8542b6"
+}
+
+###
+
+### Listar todos os produtos
+GET {{baseUrl}}/products
+Content-Type: application/json
+
+###
+
+### Buscar produto por ID
+GET {{baseUrl}}/products/b3509c94-108d-4721-a7ae-aeec58ca4af3
+Content-Type: application/json
+
+###
+
+### Buscar produtos por categoria (slug)
+GET {{baseUrl}}/category/pizzas/products
+Content-Type: application/json
+###
+
+GET {{baseUrl}}/cart/COLE_AQUI_O_PEDIDO_ID
+Content-Type: application/json
+###
+
+
+############################################
+# 💳 CHECKOUT / FINALIZAR PEDIDO
+############################################
+
+### Finalizar pedido (dados do cliente)
+POST {{baseUrl}}/checkout
+Content-Type: application/json
+
+{
+  "pedidoId": "COLE_AQUI_O_PEDIDO_ID",
+  "nome": "João da Silva",
+  "email": "joao@email.com",
+  "telefone": "11999999999",
+  "endereco": "Rua Exemplo, 123",
+  "cidade": "São Paulo",
+  "estado": "SP",
+  "cep": "01001000"
+}
+
+###
+
+############################################
+# 💳 CARTÃO (SE ESTIVER USANDO)
+############################################
+
+### Cadastrar cartão
+POST {{baseUrl}}/card/add
+Content-Type: application/json
+
+{
+  "nomeTitular": "Fulano Teste",
+  "cardNumber": "0987098709870987",
+  "date": "02/26",
+  "cvv": "438"
+}
+
+###
+
+### Listar cartões
+GET {{baseUrl}}/card/getall
+Content-Type: application/json
+
+###
+
+### 3. Finalizar Pedido (A rota nova de checkout)
+POST http://localhost:3333/checkout
+Content-Type: application/json
+
+{
+  "cliente": {
+    "nome": "Usuário Teste",
+    "telefone": "11988887777",
+    "endereco": "Rua de Teste, 500",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "01000000"
+  },
+  "itens": [
+    { "productId": "c0e6b1b1-8eb7-40c8-a9e2-ae36e2e6b5c6", "quantidade": 2 }
+  ]
+}

@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PedidoStatus {
+  PENDENTE
+  PAGO
+  CANCELADO
+}
+
+model Product {
+  id        String  @id @default(uuid())
+  nome      String
+  descricao String?
+  preco     Decimal @db.Decimal(10, 2)
+  imageUrl  String?
+
+  // RELACIONAMENTO COM CATEGORIA (1 para N)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  itensPedido ItemPedido[]
+}
+
+model Pedido {
+  id       String  @id @default(uuid())
+  // Dados do comprador (digitados no front)
+  nome     String
+  email    String?
+  telefone String?
+  endereco String
+  cidade   String
+  estado   String
+  cep      String
+
+  total  Decimal      @db.Decimal(10, 2)
+  status PedidoStatus @default(PENDENTE)
+
+  // Pix
+  pixTxId      String?
+  pixQrCode    String?
+  pixCopiaCola String?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  itens ItemPedido[]
+}
+
+model ItemPedido {
+  id         String  @id @default(uuid())
+  quantidade Int
+  preco      Decimal @db.Decimal(10, 2)
+  subtotal   Decimal @db.Decimal(10, 2)
+
+  pedidoId  String
+  productId String
+
+  pedido  Pedido  @relation(fields: [pedidoId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model Cartao {
+  id          String   @id @unique
+  nomeTitular String
+  cpfTitular  String?
+  cardNumber  String
+  date        String
+  cvv         String
+  salvoEm     DateTime @default(now())
+}
+
+model Category {
+  id   String @id @default(uuid())
+  nome String
+  slug String @unique
+
+  produtos Product[]
+
+  criadoEm DateTime @default(now())
+}
