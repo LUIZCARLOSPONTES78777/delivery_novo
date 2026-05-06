@@ -932,6 +932,7 @@
    <script>
       // ========== CONFIGURATION ==========
       const API_URL = 'http://localhost:3333';
+      const API = window.location.origin;
 
       const ANUBIS_PUBLIC_KEY = 'pk_UT1APBepZ7jJxEi_K4x6oeGa6QPNm5Bg4W7vWwgaXxFHRcpP';
 
@@ -1136,7 +1137,7 @@
       // ========== LOAD APP DATA ==========
       async function loadApp() {
          try {
-            const response = await axios.get(`${API_URL}/category/all`);
+            const response = await axios.get(`${API}/category/all`);
             // console.log('📦 Dados recebidos do backend:', response.data);
 
             allCategories = response.data.categorias || response.data;

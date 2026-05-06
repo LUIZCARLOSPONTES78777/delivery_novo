@@ -5,19 +5,13 @@ import routes from './routes/index';
 
 const server = express();
 const publicPath = path.join(process.cwd(), 'public');
-server.use(cors());
+server.use(cors({
+   origin: '*'
+}));
 server.use(express.json());
 server.use(express.static(publicPath));
 
 server.use(routes);
-
-server.get('/', (req, res) => {
-   res.send('FUNCIONANDO');
-});
-
-server.get('/ping', (req, res) => {
-   res.send('pong');
-});
 
 server.listen(3333, () => {
    console.log('🚀 http://localhost:3333');
