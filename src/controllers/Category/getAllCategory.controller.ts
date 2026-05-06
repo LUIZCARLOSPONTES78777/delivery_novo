@@ -1,20 +1,21 @@
-import type { Request, Response } from "express";
-import { getAllCategoryService } from "../../services/category.service.js";
+import { PrismaClient } from "@prisma/client";
 
-export const getAllCategoriesController = async (request: Request, response: Response) => {
+const prisma = new PrismaClient();
+
+export const getAllCategoriesController = async (req, res) => {
    try {
-      const categorias = await getAllCategoryService();
+      const categorias = await prisma.category.findMany({
+         include: {
+            produtos: true
+         }
+      });
 
-      if (!categorias) {
-         return response.status(200).json({
-            categorias: []
-         })
-      }
+      res.json(categorias);
+   } catch (error) {
+      console.error("🔥 ERRO REAL:", error);
 
-      return response.status(200).json({ categorias: categorias });
-
-   } catch (e) {
-      response.status(500).json({ error: e })
+      res.status(500).json({
+         error: String(error),
+      });
    }
 };
-
