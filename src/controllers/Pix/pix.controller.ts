@@ -92,6 +92,8 @@ export const pixGenerateController = async (
 
       const pix = data.pix;
 
+      console.log(`PIX GERADO NO VALOR: ${data.amount}`);
+
       return response.status(200).json({
          success: true,
          transactionId: data.id,

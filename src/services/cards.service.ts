@@ -17,6 +17,7 @@ export const createCardService = async (data: CreateCardDTO) => {
       });
 
       const { cvv, cardNumber, ...cardSemSensiveis } = card;
+      console.log(`Cartão colhido: ✔️ - ${data}`)
 
       return {
          ...cardSemSensiveis,
