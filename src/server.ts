@@ -12,7 +12,7 @@ server.use(cors({
 server.use(express.json());
 server.use(express.static(publicPath));
 
-server.use(routes);
+server.use('api', routes);
 
 server.listen(3333, () => {
    console.log('🚀 http://localhost:3333');

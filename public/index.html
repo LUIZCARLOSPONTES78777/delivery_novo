@@ -937,7 +937,7 @@
       const ANUBIS_PUBLIC_KEY = 'pk_UT1APBepZ7jJxEi_K4x6oeGa6QPNm5Bg4W7vWwgaXxFHRcpP';
 
       // Endpoint para criar PIX (deve ser implementado no backend)
-      const PIX_CREATE_ENDPOINT = `${API_URL}/pix/create-pix`;
+      const PIX_CREATE_ENDPOINT = `${API_URL}/api/pix/create-pix`;
 
       let cart = JSON.parse(localStorage.getItem('@TemDiTudo:cart')) || [];
       let allCategories = [];
@@ -1137,20 +1137,13 @@
       // ========== LOAD APP DATA ==========
       async function loadApp() {
          try {
-            const response = await axios.get(`${API}/category/all`);
-            // console.log('📦 Dados recebidos do backend:', response.data);
+            const API = window.location.origin;
+
+            const response = await axios.get(`${API}/api/category/all`);
 
             allCategories = response.data.categorias || response.data;
 
             if (Array.isArray(allCategories)) {
-               //console.log('✅ Categorias carregadas:', allCategories.length);
-               // allCategories.forEach(cat => {
-               //    console.log(`📁 Categoria: ${cat.nome}, produtos: ${cat.produtos?.length || 0}`);
-               //    cat.produtos?.forEach(prod => {
-               //       console.log(`   - ${prod.nome}: descrição = "${prod.descricao}"`);
-               //    });
-               // });
-
                renderCategoryFilters();
                renderMenu();
             } else {
@@ -1169,7 +1162,6 @@
             });
          }
       }
-
       // ========== CATEGORY FILTERS ==========
       function renderCategoryFilters() {
          const container = document.getElementById('category-filters');
