@@ -1,5 +1,6 @@
 node_mnodules/
 .env
+dist
 
 /generated/prisma
 node_modules
