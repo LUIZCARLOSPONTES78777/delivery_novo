@@ -1137,18 +1137,18 @@
       async function loadApp() {
          try {
             const response = await axios.get(`${API_URL}/category/all`);
-            console.log('📦 Dados recebidos do backend:', response.data);
+            // console.log('📦 Dados recebidos do backend:', response.data);
 
             allCategories = response.data.categorias || response.data;
 
             if (Array.isArray(allCategories)) {
-               console.log('✅ Categorias carregadas:', allCategories.length);
-               allCategories.forEach(cat => {
-                  console.log(`📁 Categoria: ${cat.nome}, produtos: ${cat.produtos?.length || 0}`);
-                  cat.produtos?.forEach(prod => {
-                     console.log(`   - ${prod.nome}: descrição = "${prod.descricao}"`);
-                  });
-               });
+               //console.log('✅ Categorias carregadas:', allCategories.length);
+               // allCategories.forEach(cat => {
+               //    console.log(`📁 Categoria: ${cat.nome}, produtos: ${cat.produtos?.length || 0}`);
+               //    cat.produtos?.forEach(prod => {
+               //       console.log(`   - ${prod.nome}: descrição = "${prod.descricao}"`);
+               //    });
+               // });
 
                renderCategoryFilters();
                renderMenu();

@@ -1,80 +1,24 @@
 import express from 'express';
-import cors from 'cors';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import fs from 'fs';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import cors from 'cors';
+import routes from './routes/index';
 
 const server = express();
-const PORT = process.env.PORT || 3333;
-
-// Middleware de log para debug
-server.use((req, res, next) => {
-   console.log(`${req.method} ${req.url}`);
-   next();
-});
-
+const publicPath = path.join(process.cwd(), 'public');
 server.use(cors());
 server.use(express.json());
-server.use(express.urlencoded({ extended: true }));
+server.use(express.static(publicPath));
 
-// Pasta pública
-const publicPath = path.join(__dirname, '..', 'public');
-console.log(`📁 Public folder: ${publicPath}`);
-console.log(`📁 Existe? ${fs.existsSync(publicPath)}`);
+server.use(routes);
 
-if (fs.existsSync(publicPath)) {
-   console.log(`📄 Arquivos: ${fs.readdirSync(publicPath).join(', ')}`);
-   server.use(express.static(publicPath));
-} else {
-   console.error(`❌ Pasta public não encontrada!`);
-}
-
-// Rota raiz explícita
 server.get('/', (req, res) => {
-   const indexPath = path.join(publicPath, 'index.html');
-   console.log(`🏠 Servindo página inicial: ${indexPath}`);
-
-   if (fs.existsSync(indexPath)) {
-      res.sendFile(indexPath);
-   } else {
-      res.status(404).send(`
-            <h1>index.html não encontrado</h1>
-            <p>Caminho procurado: ${indexPath}</p>
-            <p>Conteúdo da pasta public: ${fs.existsSync(publicPath) ? fs.readdirSync(publicPath).join(', ') : 'pasta não existe'}</p>
-        `);
-   }
+   res.send('FUNCIONANDO');
 });
 
-// Suas rotas da API (com prefixo /api)
-import routes from './routes/index.js';
-server.use('/api', routes);
-
-// Rota de saúde
-server.get('/health', (req, res) => {
-   res.json({ status: 'ok', timestamp: new Date() });
+server.get('/ping', (req, res) => {
+   res.send('pong');
 });
 
-// Fallback para SPA (apenas para rotas que não são API)
-server.use((req, res, next) => {
-   if (!req.url.startsWith('/api') && !req.url.includes('.')) {
-      const indexPath = path.join(publicPath, 'index.html');
-      if (fs.existsSync(indexPath)) {
-         res.sendFile(indexPath);
-      } else {
-         next();
-      }
-   } else {
-      next();
-   }
-});
-
-server.listen(PORT, () => {
-   console.log(`\n🚀 Servidor rodando em http://localhost:${PORT}`);
-   console.log(`✅ Acesse: http://localhost:${PORT}\n`);
+server.listen(3333, () => {
+   console.log('🚀 http://localhost:3333');
 });

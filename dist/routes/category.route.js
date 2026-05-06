@@ -1,3 +1,4 @@
+// src/routes/category.route.ts
 import { Router } from "express";
 import { createCategoryController } from "../controllers/Category/createCategory.controller.js";
 import { getAllCategoriesController } from "../controllers/Category/getAllCategory.controller.js";
