@@ -1,4 +1,4 @@
-import { prisma } from "../../lib/prisma.js";
+import { prisma } from "../lib/prisma.js";
 
 export const createOrderService = async (cliente: any, itens: any[]) => {
    return await prisma.$transaction(async (tx) => {

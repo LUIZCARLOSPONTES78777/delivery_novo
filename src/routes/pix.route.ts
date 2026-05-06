@@ -1,5 +1,5 @@
 import { Router } from "express";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 const router = Router();
 
@@ -64,7 +64,7 @@ router.post("/create-pix", async (req, res) => {
       console.log("📊 Status:", response.status);
       console.log("📊 Dados:", JSON.stringify(response.data, null, 2));
 
-      const pixData = response.data.pix || response.data;
+      const pixData = (response.data as any).pix || response.data;
 
       return res.json({
          qrCode: pixData.qrcode || pixData.qrCode || pixData.qrCodeImage || '',
@@ -73,7 +73,7 @@ router.post("/create-pix", async (req, res) => {
 
    } catch (error) {
       // Type assertion para AxiosError
-      const err = error as AxiosError;
+      const err = error;
 
       console.error("❌❌❌ ERRO DETALHADO:");
       console.error("Mensagem:", err.message);

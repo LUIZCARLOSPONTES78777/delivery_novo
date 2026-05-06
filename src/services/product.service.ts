@@ -1,4 +1,4 @@
-import { prisma } from "../../lib/prisma.js";
+import { prisma } from "../lib/prisma.js";
 import { v4 as uuid } from "uuid";
 
 export async function getAllProducts() {
