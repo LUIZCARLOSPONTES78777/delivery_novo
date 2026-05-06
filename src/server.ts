@@ -1,7 +1,8 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
-import routes from './routes/index';
+import routes from './routes/index.js';
+
 
 const server = express();
 const publicPath = path.join(process.cwd(), 'public');
