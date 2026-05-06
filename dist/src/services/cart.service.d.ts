@@ -1,11 +1,11 @@
 export declare function addItemToCart(pedidoId: string | undefined, productId: string, quantidade: number): Promise<string>;
-export declare function getCart(pedidoId: string): import("../../generated/prisma/models.js").Prisma__PedidoClient<{
+export declare function getCart(pedidoId: string): import("@prisma/client").Prisma.Prisma__PedidoClient<{
     itens: ({
         product: {
             id: string;
             nome: string;
             descricao: string | null;
-            preco: import("@prisma/client/runtime/client").Decimal;
+            preco: import("@prisma/client/runtime/library").Decimal;
             imageUrl: string | null;
             categoryId: string;
             criadoEm: Date;
@@ -13,10 +13,10 @@ export declare function getCart(pedidoId: string): import("../../generated/prism
         };
     } & {
         id: string;
-        preco: import("@prisma/client/runtime/client").Decimal;
+        preco: import("@prisma/client/runtime/library").Decimal;
         productId: string;
         quantidade: number;
-        subtotal: import("@prisma/client/runtime/client").Decimal;
+        subtotal: import("@prisma/client/runtime/library").Decimal;
         pedidoId: string;
     })[];
 } & {
@@ -30,14 +30,12 @@ export declare function getCart(pedidoId: string): import("../../generated/prism
     cidade: string;
     estado: string;
     cep: string;
-    total: import("@prisma/client/runtime/client").Decimal;
-    status: import("../../generated/prisma/enums.js").PedidoStatus;
+    total: import("@prisma/client/runtime/library").Decimal;
+    status: import("@prisma/client").$Enums.PedidoStatus;
     pixTxId: string | null;
     pixQrCode: string | null;
     pixCopiaCola: string | null;
-}, null, import("@prisma/client/runtime/client").DefaultArgs, {
-    omit: import("../../generated/prisma/internal/prismaNamespace.js").GlobalOmitConfig;
-}>;
+}, null, import("@prisma/client/runtime/library").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
 export declare function updateItem(itemId: string, quantidade: number): Promise<void>;
 export declare function removeItem(itemId: string): Promise<void>;
 //# sourceMappingURL=cart.service.d.ts.map

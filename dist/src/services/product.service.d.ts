@@ -2,7 +2,7 @@ export declare function getAllProducts(): Promise<false | {
     id: string;
     nome: string;
     descricao: string | null;
-    preco: import("@prisma/client/runtime/client").Decimal;
+    preco: import("@prisma/client/runtime/library").Decimal;
     imageUrl: string | null;
     categoryId: string;
     criadoEm: Date;
@@ -12,17 +12,17 @@ export declare function getProductById(id: string): Promise<{
     id: string;
     nome: string;
     descricao: string | null;
-    preco: import("@prisma/client/runtime/client").Decimal;
+    preco: import("@prisma/client/runtime/library").Decimal;
     imageUrl: string | null;
     categoryId: string;
     criadoEm: Date;
     atualizadoEm: Date;
 }>;
-export declare function getProductsByCategory(slug: string): import("../../generated/prisma/internal/prismaNamespace.js").PrismaPromise<{
+export declare function getProductsByCategory(slug: string): import("@prisma/client").Prisma.PrismaPromise<{
     id: string;
     nome: string;
     descricao: string | null;
-    preco: import("@prisma/client/runtime/client").Decimal;
+    preco: import("@prisma/client/runtime/library").Decimal;
     imageUrl: string | null;
     categoryId: string;
     criadoEm: Date;
@@ -39,7 +39,7 @@ export declare const createProductService: (produto: CreateProductDTO) => Promis
     id: string;
     nome: string;
     descricao: string | null;
-    preco: import("@prisma/client/runtime/client").Decimal;
+    preco: import("@prisma/client/runtime/library").Decimal;
     imageUrl: string | null;
     categoryId: string;
     criadoEm: Date;

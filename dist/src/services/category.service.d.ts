@@ -10,7 +10,7 @@ export declare const getAllCategoryService: () => Promise<({
         id: string;
         nome: string;
         descricao: string;
-        preco: import("@prisma/client/runtime/client").Decimal;
+        preco: import("@prisma/client/runtime/library").Decimal;
         imageUrl: string;
     }[];
 } & {

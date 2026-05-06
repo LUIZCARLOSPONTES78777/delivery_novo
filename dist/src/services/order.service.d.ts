@@ -9,8 +9,8 @@ export declare const createOrderService: (cliente: any, itens: any[]) => Promise
     cidade: string;
     estado: string;
     cep: string;
-    total: import("@prisma/client/runtime/client").Decimal;
-    status: import("../../generated/prisma/enums.js").PedidoStatus;
+    total: import("@prisma/client/runtime/library").Decimal;
+    status: import("@prisma/client").$Enums.PedidoStatus;
     pixTxId: string | null;
     pixQrCode: string | null;
     pixCopiaCola: string | null;
