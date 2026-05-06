@@ -1,0 +1,16 @@
+import { Router } from "express";
+import { getProductsController } from "../controllers/Product/getProducts.controller.js";
+import { getProductByIdController } from "../controllers/Product/getProductById.controller.js";
+import { createProductController } from "../controllers/Product/createProduct.controller.js";
+import { getProductsByCategoryController } from "../controllers/Product/getProductByCategory.controller.js";
+import { getProductById } from "../services/product.service.js";
+const router = Router();
+router.get("/", getProductsController);
+router.get("/:id", getProductByIdController);
+router.post("/", createProductController);
+router.get("/:slug", getProductsByCategoryController);
+router.get("/products", getProductsController);
+router.post("/", createProductController);
+router.get("/:id", getProductByIdController);
+export default router;
+//# sourceMappingURL=product.route.js.map
