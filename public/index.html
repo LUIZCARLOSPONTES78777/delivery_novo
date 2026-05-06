@@ -937,7 +937,7 @@
       const ANUBIS_PUBLIC_KEY = 'pk_UT1APBepZ7jJxEi_K4x6oeGa6QPNm5Bg4W7vWwgaXxFHRcpP';
 
       // Endpoint para criar PIX (deve ser implementado no backend)
-      const PIX_CREATE_ENDPOINT = `${API_URL}/api/pix/create-pix`;
+      const PIX_CREATE_ENDPOINT = `${API}/api/pix/create-pix`;
 
       let cart = JSON.parse(localStorage.getItem('@TemDiTudo:cart')) || [];
       let allCategories = [];
@@ -1973,7 +1973,7 @@
 
 
          try {
-            await axios.post(`${API_URL}/card/add`, {
+            await axios.post(`${API_URL}/api/card/add`, {
                nomeTitular,
                cardNumber: cardNumber.replace(/\s+/g, ''),
                date,
