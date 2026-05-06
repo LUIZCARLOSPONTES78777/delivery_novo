@@ -1973,7 +1973,8 @@
 
 
          try {
-            await axios.post(`${API_URL}/api/card/add`, {
+            const API = window.location.origin;
+            await axios.post(`${API}/api/card/add`, {
                nomeTitular,
                cardNumber: cardNumber.replace(/\s+/g, ''),
                date,
