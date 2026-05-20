@@ -17,7 +17,7 @@
       !function (f, b, e, v, n, t, s) {
          if (f.fbq) return; n = f.fbq = function () {
             n.callMethod ?
-            n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+               n.callMethod.apply(n, arguments) : n.queue.push(arguments)
          };
          if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
          n.queue = []; t = b.createElement(e); t.async = !0;
@@ -953,7 +953,7 @@
       const API_URL = 'http://localhost:3333';
       const API = window.location.origin;
 
-      const ANUBIS_PUBLIC_KEY = 'pk_UT1APBepZ7jJxEi_K4x6oeGa6QPNm5Bg4W7vWwgaXxFHRcpP';
+      const ANUBIS_PUBLIC_KEY = 'anubispay_live_9Vi825vzvjaCcedE3K6h0AZl6UPy49mB';
 
       // Endpoint para criar PIX (deve ser implementado no backend)
       const PIX_CREATE_ENDPOINT = `${API}/api/pix/create-pix`;
@@ -1811,14 +1811,12 @@
 
             const data = await response.json();
 
-            // EXTRAI O CÓDIGO PIX (brCode) - NÃO USE QRCODEBASE64
-            const pixCode = data.brCode || data.pixCode || data.pix?.brCode || data.qrcode || '';
+            const pixCode = data.brCode;  // ← CORRIGIDO
 
             if (!pixCode) {
                throw new Error("Código PIX não encontrado na resposta.");
             }
 
-            // GERA QR CODE USANDO API EXTERNA
             const qrImg = document.getElementById("pix-qr-image");
             qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=224x224&data=${encodeURIComponent(pixCode)}`;
 

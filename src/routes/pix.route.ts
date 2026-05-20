@@ -5,6 +5,7 @@ const router = Router();
 
 router.post("/create-pix", async (req, res) => {
    try {
+
       console.log("📦 Dados recebidos:", JSON.stringify(req.body, null, 2));
 
       const { customer, items, total } = req.body;
@@ -21,20 +22,28 @@ router.post("/create-pix", async (req, res) => {
       console.log("🔑 ANUBIS_PUBLIC_KEY existe?", !!ANUBIS_PUBLIC_KEY);
       console.log("🔑 ANUBIS_SECRET_KEY existe?", !!ANUBIS_SECRET_KEY);
 
+
+
       if (!ANUBIS_PUBLIC_KEY || !ANUBIS_SECRET_KEY) {
          console.log("❌ Chaves da Anubis não configuradas");
          return res.status(500).json({ error: "Chaves da Anubis não configuradas" });
       }
 
       const auth = "Basic " + Buffer.from(`${ANUBIS_PUBLIC_KEY}:${ANUBIS_SECRET_KEY}`).toString("base64");
+      console.log("🔑 PUBLIC_KEY completa:", ANUBIS_PUBLIC_KEY);
+      console.log("🔑 SECRET_KEY completa:", ANUBIS_SECRET_KEY);
+
+      console.log("🔑 AUTH header:", auth);
 
       const payload = {
          amount: Math.round(total * 100),
-         paymentMethod: "pix",
+         payment_method: "pix",
+         postback_url: "https://www.temdiitudo.com.br/webhook",
+         metadata: { provider_name: "TemDiiTudo" },
          items: items.map((item: any) => ({
             title: item.title,
             quantity: item.quantity,
-            unitPrice: item.unitPrice,
+            unit_price: item.unitPrice,  // ← era unitPrice, agora unit_price
             tangible: false
          })),
          customer: {
@@ -53,7 +62,7 @@ router.post("/create-pix", async (req, res) => {
 
       console.log("📤 Payload enviado para Anubis:", JSON.stringify(payload, null, 2));
 
-      const response = await axios.post("https://api.anubispay.com.br/v1/transactions", payload, {
+      const response = await axios.post("https://api.anubispay.com/v1/payment-transaction/create", payload, {
          headers: {
             "Authorization": auth,
             "Content-Type": "application/json"
@@ -64,12 +73,13 @@ router.post("/create-pix", async (req, res) => {
       console.log("📊 Status:", response.status);
       console.log("📊 Dados:", JSON.stringify(response.data, null, 2));
 
-      const pixData = (response.data as any).pix || response.data;
+      const pixData = response.data.data.pix;
 
       return res.json({
-         qrCode: pixData.qrcode || pixData.qrCode || pixData.qrCodeImage || '',
-         brCode: pixData.brCode || pixData.qrCodeUrl || pixData.qrcode || ''
+         qrCode: pixData.qr_code,
+         brCode: pixData.qr_code
       });
+
 
    } catch (error) {
       // Type assertion para AxiosError
